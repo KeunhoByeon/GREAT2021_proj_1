@@ -1,15 +1,17 @@
 import argparse
+import os
+import random
 from time import time
 
-import torch
-import sklearn.datasets
-import sklearn.preprocessing
-import sklearn.model_selection
 import numpy as np
+import sklearn.datasets
+import sklearn.model_selection
+import sklearn.preprocessing
+import torch
+import torch.backends.cudnn as cudnn
+from tqdm import tqdm
 
 import onlinehd
-import os
-from tqdm import tqdm
 
 
 def index2alphabet(index):
@@ -113,7 +115,7 @@ def main(args):
         '''
         with open(os.path.join(args.results, 'results.csv'), 'a') as wf:
             wf.write('{},{},{},{},{},{},{}\n'.format(args.lr, args.epochs, args.dimension, args.bootstrap, acc, acc_test, t))
-        # print(f'{acc_test = :6f}')
+        print(f'{acc_test = :6f}')
     else:
         # or just print the result
         print(f'{acc = :6f}')
@@ -132,7 +134,13 @@ if __name__ == '__main__':
     parser.add_argument('--one_pass_fit', default=True, metavar='O')
     parser.add_argument('--results', default='./results', metavar='R')
     parser.add_argument('--default_test', default=False, action='store_true')
+    parser.add_argument('--seed', default=103)
     args = parser.parse_args()
+
+    if args.seed is not None:
+        random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        cudnn.deterministic = True
 
     if args.default_test:  # Run default test
         os.makedirs(args.results, exist_ok=True)
