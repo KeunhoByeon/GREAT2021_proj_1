@@ -60,8 +60,8 @@ def load():
 
     x = np.array(x).astype(np.float64)
     y = np.array(y).astype(np.float64)
-    x_test = np.array(x_test).astype(np.int32)
-    y_test = np.array(y_test).astype(np.int32)
+    x_test = np.array(x_test).astype(np.float64)
+    y_test = np.array(y_test).astype(np.float64)
 
     # Normalize
     scaler = sklearn.preprocessing.Normalizer().fit(x)
@@ -115,7 +115,8 @@ def main(args):
         '''
         with open(os.path.join(args.results, 'results.csv'), 'a') as wf:
             wf.write('{},{},{},{},{},{},{}\n'.format(args.lr, args.epochs, args.dimension, args.bootstrap, acc, acc_test, t))
-        print(f'{acc_test = :6f}')
+        # # Debug
+        # print('{},{},{},{},{},{},{}\n'.format(args.lr, args.epochs, args.dimension, args.bootstrap, acc, acc_test, t))
     else:
         # or just print the result
         print(f'{acc = :6f}')
