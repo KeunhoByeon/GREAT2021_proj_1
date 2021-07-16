@@ -145,7 +145,7 @@ if __name__ == '__main__':
         for lr in (0.2, 0.3, 0.4, 0.5):
             for epochs in (20, 40, 60):
                 for dimension in (5000, 7500, 10000):
-                    for bootstrap in (1.0, 0.25, 0.5):
+                    for bootstrap in (0.25, 0.5):
                         # Set args
                         args.lr = lr
                         args.epochs = epochs
